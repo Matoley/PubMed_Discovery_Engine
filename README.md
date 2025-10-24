@@ -2,7 +2,7 @@
 Open-source AI tool using BioBert and BioGPT to generate novel research hypothesis
 
 The goal of the project is to assist in biomedical research:
-  Biomedical research often requires perusing vast amount of medical publication. The sheer volume of publications means that advancement in innovation is hindered by finding connections and typically, advanced text-mining tools are inaccessible to many or require formiable amounts    of experience with coding.
+  Biomedical research often requires perusing vast amount of medical publication. The sheer volume of publications means that advancement in innovation is hindered by finding connections and typically, advanced text-mining tools are inaccessible to many or require formidable amounts    of experience with coding.
 
 ****
 
