@@ -65,16 +65,16 @@ print("The unique entities")
 print(unique_entities)
 #BioGPT****************************************
 
-# input_text = f"""
-# Based on the following biomedical information:
-# {bio_summary}
+input_text = f"""
+Based on the following biomedical information:
+{bio_summary}
 
-# Novel RNA splicing research could investigate: 
+Novel RNA splicing research could investigate: 
 
-# """
-# #2. Suggest a novel research hypothesis related to {topic}.
-# #3. Explain the reasoning behind the hypothesis.
-# response = generator(input_text,max_new_tokens = 1024, num_return_sequences = 1, do_sample = True)
-# text = response[0]["generated_text"]
+"""
+#2. Suggest a novel research hypothesis related to {topic}.
+#3. Explain the reasoning behind the hypothesis.
+response = generator(input_text,max_new_tokens = 1024, num_return_sequences = 1, do_sample = True)
+text = response[0]["generated_text"]
 
-# print(text[len(bio_summary)+46:])   
+print(text[len(bio_summary)+46:])   
