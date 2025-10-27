@@ -14,11 +14,18 @@ import sacremoses
 
 from transformers import pipeline, set_seed
 
-from transformers import BioGptTokenizer, BioGptForCausalLM
+from transformers import BioGptTokenizer, BioGptForCausalLM, AutoTokenizer, AutoModel
+
+import numpy as np
+
+from sklearn.metrics.pairwise import cosine_similarity
 
 
+BERT_model = 'dmis-lab/biobert-base-cased-v1.1'
 
+biobert_tokenizer = AutoTokenizer.from_pretrained(BERT_model)
 
+biobert_model = biobert_model = AutoModel.from_pretrained(BERT_model)
 
 model = BioGptForCausalLM.from_pretrained("microsoft/biogpt")
 
@@ -33,6 +40,8 @@ bio_summary = ""
 all_entities = []
 
 unique_entities = []
+
+inputs = []
 
 nlp = spacy.load("en_core_sci_lg")
 topic = input("What field do you want to discover novel research opportunities in?")
@@ -63,6 +72,11 @@ for ent in all_entities:
         unique_entities.append(ent)
 print("The unique entities")
 print(unique_entities)
+#BioBERT***************************************
+for ent in unique_entities:
+    input = biobert_tokenizer(ent,return_tensors = "pt", truncation = True, padding = True, max_length = 512)
+    inputs.append(input)
+print(inputs)
 #BioGPT****************************************
 
 input_text = f"""
