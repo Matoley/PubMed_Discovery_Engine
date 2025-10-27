@@ -32,11 +32,13 @@ bio_summary = ""
 
 all_entities = []
 
+unique_entities = []
+
 nlp = spacy.load("en_core_sci_lg")
 topic = input("What field do you want to discover novel research opportunities in?")
 Entrez.email = "matthewoleynikov1@gmail.com"
 
-handle = Entrez.esearch(db="pubmed", term = topic, retmax = 3)
+handle = Entrez.esearch(db="pubmed", term = topic, retmax = 10)
 record = Entrez.read(handle)
 idlist = record["IdList"]
 print(idlist)
@@ -56,16 +58,23 @@ for x in idlist:
         print(abstract)
 print(all_entities)
 
-input_text = f"""
-Based on the following biomedical information:
-{bio_summary}
+for ent in all_entities:
+    if ent not in unique_entities:
+        unique_entities.append(ent)
+print("The unique entities")
+print(unique_entities)
+#BioGPT****************************************
 
-Novel RNA splicing research could investigate: 
+# input_text = f"""
+# Based on the following biomedical information:
+# {bio_summary}
 
-"""
-#2. Suggest a novel research hypothesis related to {topic}.
-#3. Explain the reasoning behind the hypothesis.
-response = generator(input_text,max_new_tokens = 1024, num_return_sequences = 1, do_sample = True)
-text = response[0]["generated_text"]
+# Novel RNA splicing research could investigate: 
 
-print(text[len(bio_summary)+46:])   
+# """
+# #2. Suggest a novel research hypothesis related to {topic}.
+# #3. Explain the reasoning behind the hypothesis.
+# response = generator(input_text,max_new_tokens = 1024, num_return_sequences = 1, do_sample = True)
+# text = response[0]["generated_text"]
+
+# print(text[len(bio_summary)+46:])   
