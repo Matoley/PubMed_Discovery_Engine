@@ -41,7 +41,7 @@ all_entities = []
 
 unique_entities = []
 
-inputs = []
+
 
 nlp = spacy.load("en_core_sci_lg")
 topic = input("What field do you want to discover novel research opportunities in?")
@@ -64,19 +64,25 @@ for x in idlist:
         for chunk in doc.noun_chunks:
             if chunk.root.pos_ in ["NOUN","PROPN","ADJ"] and len(chunk.text) > 2:   
                 all_entities.append(chunk.text)
-        print(abstract)
-print(all_entities)
+        #print(abstract)
+#print(all_entities)
 
 for ent in all_entities:
     if ent not in unique_entities:
         unique_entities.append(ent)
 print("The unique entities")
-print(unique_entities)
+#print(unique_entities)
 #BioBERT***************************************
-for ent in unique_entities:
-    input = biobert_tokenizer(ent,return_tensors = "pt", truncation = True, padding = True, max_length = 512)
-    inputs.append(input)
-print(inputs)
+def get_embedding(ent):
+    if not ent or ent.isspace():
+        return np.zeros(768)
+    inputs = biobert_tokenizer(ent,return_tensors = "pt", truncation = True, padding = True, max_length = 512)
+    with torch.no_grad():
+        outputs = biobert_model(**inputs)
+    if outputs.last_hidden_state is None or outputs.last_hidden_state.shape[1] == 0:
+        return np.zeros(768)
+        return outputs.last.hidden.state[0,0,:]
+
 #BioGPT****************************************
 
 input_text = f"""
@@ -91,4 +97,4 @@ Novel RNA splicing research could investigate:
 response = generator(input_text,max_new_tokens = 1024, num_return_sequences = 1, do_sample = True)
 text = response[0]["generated_text"]
 
-print(text[len(bio_summary)+46:])   
+#print(text[len(bio_summary)+46:])   
