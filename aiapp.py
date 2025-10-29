@@ -103,7 +103,10 @@ if not ent_embedding_list:
     exit()
 
 embedding_array = np.array(ent_embedding_list)
-print(embedding_array)
+
+print("\ngenerating matrix of similarity(may take a while)")
+similarity_matrix = cosine_similarity(embedding_array)
+print(similarity_matrix)
 #for i, j in itertools.combinations(range(len(unique_entities)),2):
    
 #BioGPT****************************************
