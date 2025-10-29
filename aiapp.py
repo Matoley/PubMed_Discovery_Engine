@@ -20,6 +20,7 @@ import numpy as np
 
 from sklearn.metrics.pairwise import cosine_similarity
 
+import itertools
 
 BERT_model = 'dmis-lab/biobert-base-cased-v1.1'
 
@@ -47,7 +48,7 @@ nlp = spacy.load("en_core_sci_lg")
 topic = input("What field do you want to discover novel research opportunities in?")
 Entrez.email = "matthewoleynikov1@gmail.com"
 
-handle = Entrez.esearch(db="pubmed", term = topic, retmax = 10)
+handle = Entrez.esearch(db="pubmed", term = topic, retmax = 3)
 record = Entrez.read(handle)
 idlist = record["IdList"]
 print(idlist)
@@ -71,8 +72,9 @@ for ent in all_entities:
     if ent not in unique_entities:
         unique_entities.append(ent)
 print("The unique entities")
-#print(unique_entities)
+print(unique_entities)
 #BioBERT***************************************
+
 def get_embedding(ent):
     if not ent or ent.isspace():
         return np.zeros(768)
@@ -81,8 +83,29 @@ def get_embedding(ent):
         outputs = biobert_model(**inputs)
     if outputs.last_hidden_state is None or outputs.last_hidden_state.shape[1] == 0:
         return np.zeros(768)
-        return outputs.last.hidden.state[0,0,:]
+    else:
+        cls_tensor = outputs.last_hidden_state[0,0,:]
+        return cls_tensor.cpu().numpy()
 
+#Semantic analysis*****************************
+
+print("Generating embeddings")
+ent_embedding_list = []
+valid_ents = []
+for ent in unique_entities:
+    embedding = get_embedding(ent)
+    if np.any(embedding):
+        ent_embedding_list.append(embedding)
+        valid_ents.append(ent)
+
+if not ent_embedding_list:
+    print("no valid embeddings")
+    exit()
+
+embedding_array = np.array(ent_embedding_list)
+print(embedding_array)
+#for i, j in itertools.combinations(range(len(unique_entities)),2):
+   
 #BioGPT****************************************
 
 input_text = f"""
@@ -98,3 +121,4 @@ response = generator(input_text,max_new_tokens = 1024, num_return_sequences = 1,
 text = response[0]["generated_text"]
 
 #print(text[len(bio_summary)+46:])   
+print("done")
