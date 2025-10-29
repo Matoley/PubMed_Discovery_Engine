@@ -22,7 +22,11 @@ from sklearn.metrics.pairwise import cosine_similarity
 
 import itertools
 
-import os 
+import os
+
+import Levenshtein
+
+from Levenshtein import distance
 
 STOP_WORDS = [
     'a', 'an', 'the', 'is', 'are', 'was', 'were', 'be', 'been', 'being',
@@ -123,7 +127,7 @@ nlp = spacy.load("en_core_sci_lg")
 topic = input("What field do you want to discover novel research opportunities in?")
 Entrez.email = "matthewoleynikov1@gmail.com"
 
-handle = Entrez.esearch(db="pubmed", term = topic, retmax = 100)
+handle = Entrez.esearch(db="pubmed", term = topic, retmax = 20)
 record = Entrez.read(handle)
 idlist = record["IdList"]
 print(idlist)
@@ -184,16 +188,17 @@ similarity_matrix = cosine_similarity(embedding_array)
 #print(similarity_matrix)
 for i, j in itertools.combinations(range(len(valid_ents)),2):
    score = similarity_matrix[i,j]
+   if Levenshtein.distance(valid_ents[i],valid_ents[j]) > 2:
 
-   if valid_ents[i].lower() not in STOP_WORDS and valid_ents[j].lower() not in STOP_WORDS:
-    if valid_ents[i].lower() != valid_ents[j].lower() and valid_ents[i].lower() not in valid_ents[j].lower() and valid_ents[j].lower() not in valid_ents[i].lower():
-        if score >= threshold and score < 0.999:
-                pair_data = {
-            "entity_1" : valid_ents[i],
-            "entity_2" : valid_ents[j],
-            "score" : score
-            }
-                use_pairs.append(pair_data)
+    if valid_ents[i].lower() not in STOP_WORDS and valid_ents[j].lower() not in STOP_WORDS:
+        if valid_ents[i].lower() != valid_ents[j].lower() and valid_ents[i].lower() not in valid_ents[j].lower() and valid_ents[j].lower() not in valid_ents[i].lower():
+            if score >= threshold and score < 0.999:
+                    pair_data = {
+                "entity_1" : valid_ents[i],
+                "entity_2" : valid_ents[j],
+                "score" : score
+                }
+                    use_pairs.append(pair_data)
 print(use_pairs)
 #BioGPT****************************************
 
