@@ -28,7 +28,7 @@ import Levenshtein
 
 from Levenshtein import distance
 
-STOP_WORDS = [
+STOP_WORDS = {
     'a', 'an', 'the', 'is', 'are', 'was', 'were', 'be', 'been', 'being',
     'have', 'has', 'had', 'do', 'does', 'did', 'and', 'but', 'if', 'or',
     'as', 'of', 'at', 'by', 'for', 'with', 'about', 'against', 'between',
@@ -95,7 +95,8 @@ STOP_WORDS = [
     'a major', 'a significant', 'a combination', 'our understanding', 'a new',
     'these findings', 'our findings', 'this study', 'recent studies', 'a leading cause',
     'growing evidence', 'recent research',
-   ]
+}
+
 
 device = torch.device("cpu")
 
@@ -123,11 +124,11 @@ use_pairs = []
 
 threshold = 0.90
 
-nlp = spacy.load("en_core_sci_lg")
+nlp = spacy.load("en_ner_bionlp13cg_md")
 topic = input("What field do you want to discover novel research opportunities in?")
 Entrez.email = "matthewoleynikov1@gmail.com"
 
-handle = Entrez.esearch(db="pubmed", term = topic, retmax = 20)
+handle = Entrez.esearch(db="pubmed", term = topic, retmax = 30)
 record = Entrez.read(handle)
 idlist = record["IdList"]
 print(idlist)
@@ -140,7 +141,7 @@ for x in idlist:
         bio_summary += f"{title}\n{abstract}\n\n"
         doc = nlp(abstract)
         for ent in doc.ents:
-            all_entities.append(ent.text)
+                all_entities.append(ent.text)
         for chunk in doc.noun_chunks:
             if chunk.root.pos_ in ["NOUN","PROPN","ADJ"] and len(chunk.text) > 2:   
                 all_entities.append(chunk.text)
@@ -193,12 +194,12 @@ for i, j in itertools.combinations(range(len(valid_ents)),2):
     if valid_ents[i].lower() not in STOP_WORDS and valid_ents[j].lower() not in STOP_WORDS:
         if valid_ents[i].lower() != valid_ents[j].lower() and valid_ents[i].lower() not in valid_ents[j].lower() and valid_ents[j].lower() not in valid_ents[i].lower():
             if score >= threshold and score < 0.999:
-                    pair_data = {
+                pair_data = {
                 "entity_1" : valid_ents[i],
                 "entity_2" : valid_ents[j],
                 "score" : score
                 }
-                    use_pairs.append(pair_data)
+                use_pairs.append(pair_data)
 print(use_pairs)
 #BioGPT****************************************
 
@@ -216,3 +217,4 @@ Novel RNA splicing research could investigate:
 
 #print(text[len(bio_summary)+46:])   
 print("done")
+#use_pairs.sort(key=lambda x: x["score"], reverse=True)
