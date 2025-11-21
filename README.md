@@ -21,7 +21,7 @@ The project is planned to work in 4 steps
      
 ****What is completed/being worked on?****
 1. PubMed (Done)
-2. scispaCy (Near done)
-3. BioBERT (Starting soon)
-4. BioGPT (Currently done, but integration with BioBERT may change status)
+2. scispaCy (Done)
+3. BioBERT (Near done)
+4. BioGPT (Being revised)
 
