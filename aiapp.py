@@ -96,7 +96,18 @@ STOP_WORDS = {
     'these findings', 'our findings', 'this study', 'recent studies', 'a leading cause',
     'growing evidence', 'recent research',
 }
-
+SIGNIFICANT_LABELS = {
+    "GENE_OR_GENE_PRODUCT",
+    "AMINO_ACID",
+    "CELL",
+    "CELLULAR_COMPONENT",
+    "CANCER",
+    "TISSUE",
+    "ORGAN",
+    "PATHOLOGICAL_FORMATION",
+    "SIMPLE_CHEMICAL",
+    "ORGANISM"
+}
 
 device = torch.device("cpu")
 
@@ -122,7 +133,9 @@ unique_entities = []
 
 use_pairs = []
 
-threshold = 0.90
+top_threshold = 0.95
+
+bottom_threshold = 0.85
 
 nlp = spacy.load("en_ner_bionlp13cg_md")
 topic = input("What field do you want to discover novel research opportunities in?")
@@ -141,10 +154,11 @@ for x in idlist:
         bio_summary += f"{title}\n{abstract}\n\n"
         doc = nlp(abstract)
         for ent in doc.ents:
+            if ent.label_ in SIGNIFICANT_LABELS:
                 all_entities.append(ent.text)
-        for chunk in doc.noun_chunks:
-            if chunk.root.pos_ in ["NOUN","PROPN","ADJ"] and len(chunk.text) > 2:   
-                all_entities.append(chunk.text)
+        #for chunk in doc.noun_chunks:
+            #if chunk.root.pos_ in ["NOUN","PROPN","ADJ"] and len(chunk.text) > 2:   
+                #all_entities.append(chunk.text)
         #print(abstract)
 #print(all_entities)
 
@@ -193,7 +207,7 @@ for i, j in itertools.combinations(range(len(valid_ents)),2):
 
     if valid_ents[i].lower() not in STOP_WORDS and valid_ents[j].lower() not in STOP_WORDS:
         if valid_ents[i].lower() != valid_ents[j].lower() and valid_ents[i].lower() not in valid_ents[j].lower() and valid_ents[j].lower() not in valid_ents[i].lower():
-            if score >= threshold and score < 0.999:
+            if score >= bottom_threshold and score <= top_threshold and score < 0.999:
                 pair_data = {
                 "entity_1" : valid_ents[i],
                 "entity_2" : valid_ents[j],
