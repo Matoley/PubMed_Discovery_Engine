@@ -22,6 +22,51 @@ The project is planned to work in 4 steps
 ****What is completed/being worked on?****
 1. PubMed (Done)
 2. scispaCy (Done)
-3. BioBERT (Near done)
-4. BioGPT (Being revised)
+3. BioBERT (Done)
+4. BioGPT (Done)
+
+## Set up
+
+Follow these steps to run a local copy of the program
+
+### Prerequisites
+
+Python 3.8+ and pip must be installed, along with other program requirements (see requirements.txt)
+
+### Installation
+
+1.  Clone the repo:
+    ```sh
+    git clone [https://github.com/Matoley/PubMed_Discovery_Engine.git](https://github.com/Matoley/PubMed_Discovery_Engine.git)
+    ```
+2.  Navigate into the project directory:
+    ```sh
+    cd PubMed_Discovery_Engine
+    ```
+3.  Create and activate a virtual environment:
+    ```sh
+    # On macOS/Linux
+    python3 -m venv venv-stable
+    source venv-stable/bin/activate
+    
+    # On Windows
+    python -m venv venv-stable
+    .\venv-stable\Scripts\activate
+    ```
+4.  Install all the required packages:
+    ```sh
+    pip install -r requirements.txt
+    ```
+After processing 100 abstracts, it will output the top 10 results.
+
+### Run the app
+
+Simply run the main Python script:
+```bash
+python aiapp.py
+```
+It will ask you for a topic. Give an example, preferably something specific (Ubiquitination, Circadian Clock, etc.) and press Enter.
+```
+What field do you want to discover novel research opportunities in?
+```
 
