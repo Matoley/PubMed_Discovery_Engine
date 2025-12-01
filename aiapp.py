@@ -121,7 +121,7 @@ model = BioGptForCausalLM.from_pretrained("microsoft/biogpt")
 
 tokenizer =  BioGptTokenizer.from_pretrained("microsoft/biogpt")
 
-generator = pipeline("text-generation",model=model,tokenizer=tokenizer,device = device)
+generator = pipeline("text-generation",model=model,tokenizer=tokenizer,device = device, return_full_text=False)
 
 set_seed(42)
 
@@ -141,7 +141,7 @@ nlp = spacy.load("en_ner_bionlp13cg_md")
 topic = input("What field do you want to discover novel research opportunities in?")
 Entrez.email = "matthewoleynikov1@gmail.com"
 
-handle = Entrez.esearch(db="pubmed", term = topic, retmax = 30)
+handle = Entrez.esearch(db="pubmed", term = topic, retmax = 100)
 record = Entrez.read(handle)
 idlist = record["IdList"]
 print(idlist)
@@ -214,21 +214,27 @@ for i, j in itertools.combinations(range(len(valid_ents)),2):
                 "score" : score
                 }
                 use_pairs.append(pair_data)
-print(use_pairs)
+#print(use_pairs)
+
+if not use_pairs:
+    print(f"No novel connections found in the array ({bottom_threshold}-{top_threshold}).")
+    print("Try broadening your topic or increasing the RETMAX value. Exiting.")
+    exit()
 #BioGPT****************************************
+use_pairs.sort(key=lambda x: x["score"], reverse=True)
+top_10_pairs = use_pairs[:10]
+print(top_10_pairs)
+for pairs in top_10_pairs:
+    ent_A = pairs["entity_1"]
+    ent_B = pairs["entity_2"]
+    score = pairs["score"]
+    input_text = f"A novel research hypothesis linking {ent_A} and {ent_B} in the context of {topic} is that"
 
-input_text = f"""
-Based on the following biomedical information:
-{bio_summary}
-
-Novel RNA splicing research could investigate: 
-
-"""
-#2. Suggest a novel research hypothesis related to {topic}.
-#3. Explain the reasoning behind the hypothesis.
-#response = generator(input_text,max_new_tokens = 1024, num_return_sequences = 1, do_sample = True)
-#text = response[0]["generated_text"]
-
-#print(text[len(bio_summary)+46:])   
+    response = generator(input_text,max_new_tokens = 1024, num_return_sequences = 1, do_sample = True)
+    clean_text = response[0]["generated_text"].strip()
+    if clean_text:
+            print(clean_text)
+    else:
+        print("BioGPT returned an empty string. The prompt might be too complex for this pair.")
+    print("\n ********************************************************************************")
 print("done")
-#use_pairs.sort(key=lambda x: x["score"], reverse=True)
