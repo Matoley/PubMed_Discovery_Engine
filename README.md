@@ -18,6 +18,21 @@ The project is planned to work in 4 steps
 
 4. ****Generating Novel Hypothesis****
    The program feeds the most promising correlations based off BioBERT vectors (embeddings) to a specially biomedical tuned LLM (BioGPT). The model is prompted to provided plausible hypothesis that relate to the given entities.
+
+This project utilizes the following open-source frameworks and models:
+
+* **scispaCy**
+    Neumann, M., King, D., Beltagy, I., & Ammar, W. (2019). ScispaCy: Fast and Robust Models for Biomedical Natural Language Processing. [Link to Paper](https://doi.org/10.18653/v1/W19-5034)
+
+* **BioBERT**
+    Lee, J., et al. (2020). BioBERT: a pre-trained biomedical language representation model for biomedical text mining. [Link to Paper](https://doi.org/10.1093/bioinformatics/btz682)
+
+* **BioGPT**
+    Luo, R., et al. (2022). BioGPT: Generative Pre-trained Transformer for Biomedical Text Generation and Mining. [Link to Paper](https://doi.org/10.1093/bib/bbac409)
+
+Thank you to **Dr. Alexander Varshavsky** for his guidance and feedback that assisted in evaluating the uses of this tool
+
+****
      
 ## Set up
 
