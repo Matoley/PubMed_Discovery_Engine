@@ -19,12 +19,6 @@ The project is planned to work in 4 steps
 4. ****Generating Novel Hypothesis****
    The program feeds the most promising correlations based off BioBERT vectors (embeddings) to a specially biomedical tuned LLM (BioGPT). The model is prompted to provided plausible hypothesis that relate to the given entities.
      
-****What is completed/being worked on?****
-1. PubMed (Done)
-2. scispaCy (Done)
-3. BioBERT (Done)
-4. BioGPT (Done)
-
 ## Set up
 
 Follow these steps to run a local copy of the program
