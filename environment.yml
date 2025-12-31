@@ -1,0 +1,19 @@
+name: discovery_env
+channels:
+  - pytorch
+  - conda-forge
+  - defaults
+dependencies:
+  - python=3.11
+  - pip
+  - numpy=1.26.4
+  - pandas
+  - scikit-learn=1.7.2
+  - pytorch
+  - pip:
+      - spacy==3.4.4
+      - biopython==1.85
+      - transformers==4.57.1
+      - python-Levenshtein==0.27.3
+      - scispacy==0.5.1
+      - https://s3-us-west-2.amazonaws.com/ai2-s2-scispacy/releases/v0.5.1/en_ner_bionlp13cg_md-0.5.1.tar.gz
