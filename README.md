@@ -42,6 +42,19 @@ Follow these steps to run a local copy of the program
 
 Python 3.8+ and pip must be installed, along with other program requirements (see requirements.txt)
 
+This program is optimized for Python 3.11. Using more recent versions may lead to C-compiler errors
+
+To comply with NCBI's Entrez API requirements and avoid being blocked, you must provide an email address.
+
+**On macOS/Linux:**
+```bash
+export PUBMED_EMAIL="email@example.com"
+```
+**On Windows**
+```bash
+set PUBMED_EMAIL="email@example.com"
+```
+
 ### Installation
 
 1.  Clone the repo:
