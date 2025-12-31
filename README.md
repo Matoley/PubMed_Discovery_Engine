@@ -59,14 +59,25 @@ set PUBMED_EMAIL="email@example.com"
 
 1.  Clone the repo:
     ```sh
-    git clone [https://github.com/Matoley/PubMed_Discovery_Engine.git](https://github.com/Matoley/PubMed_Discovery_Engine.git)
+    git clone https://github.com/Matoley/PubMed_Discovery_Engine.git
     ```
 2.  Navigate into the project directory:
     ```sh
     cd PubMed_Discovery_Engine
     ```
+
 3.  Create and activate a virtual environment:
-    ```sh
+
+Option 1 (recommended):
+  ```sh
+    # Create the environment from the blueprint
+    conda env create -f environment.yml
+
+    # Activate the environment
+    conda activate discovery_env
+  ```
+Option 2:
+  ```sh
     # On macOS/Linux
     python3 -m venv venv-stable
     source venv-stable/bin/activate
@@ -74,11 +85,11 @@ set PUBMED_EMAIL="email@example.com"
     # On Windows
     python -m venv venv-stable
     .\venv-stable\Scripts\activate
-    ```
-4.  Install all the required packages:
-    ```sh
+  
+   # Install all the required packages:
+
     pip install -r requirements.txt
-    ```
+  ```
 After processing 100 abstracts, it will output the top 10 results.
 
 ### Run the app
