@@ -14,6 +14,8 @@ conllu==6.0.0
 contourpy==1.3.3
 cycler==0.12.1
 cymem==2.0.11
+en_core_sci_lg @ https://s3-us-west-2.amazonaws.com/ai2-s2-scispacy/releases/v0.5.1/en_core_sci_lg-0.5.1.tar.gz#sha256=b64746e84ca033bf4158fb811d93d50cfd8f75fead85c7261e4e6119bacded22
+en_ner_bionlp13cg_md @ https://s3-us-west-2.amazonaws.com/ai2-s2-scispacy/releases/v0.5.1/en_ner_bionlp13cg_md-0.5.1.tar.gz#sha256=d28af4c1138993ada1f9c8adbfe9eaf4b3d03c35be742ca4d419b4b20056c31e
 filelock==3.20.0
 fonttools==4.60.1
 fsspec==2025.9.0
@@ -58,6 +60,7 @@ Pygments==2.19.2
 pyparsing==3.2.5
 pysbd==0.3.4
 python-dateutil==2.9.0.post0
+python-Levenshtein==0.27.1
 pytz==2025.2
 PyYAML==6.0.3
 RapidFuzz==3.14.1
@@ -93,4 +96,3 @@ urllib3==2.5.0
 wasabi==0.10.1
 weasel==0.4.1
 wrapt==2.0.0
-en_ner_bionlp13cg_md @ https://s3-us-west-2.amazonaws.com/ai2-s2-scispacy/releases/v0.5.3/en_ner_bionlp13cg_md-0.5.3.tar.gz
