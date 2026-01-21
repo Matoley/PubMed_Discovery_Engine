@@ -42,18 +42,42 @@ Follow these steps to run a local copy of the program
 
 Python 3.8+ and pip must be installed, along with other program requirements (see requirements.txt)
 
+This program is optimized for Python 3.11. Using more recent versions may lead to C-compiler errors
+
+To comply with NCBI's Entrez API requirements and avoid being blocked, you must provide an email address.
+
+**On macOS/Linux:**
+```bash
+export PUBMED_EMAIL="email@example.com"
+```
+**On Windows**
+```bash
+set PUBMED_EMAIL="email@example.com"
+```
+
 ### Installation
 
 1.  Clone the repo:
     ```sh
-    git clone [https://github.com/Matoley/PubMed_Discovery_Engine.git](https://github.com/Matoley/PubMed_Discovery_Engine.git)
+    git clone https://github.com/Matoley/PubMed_Discovery_Engine.git
     ```
 2.  Navigate into the project directory:
     ```sh
     cd PubMed_Discovery_Engine
     ```
+
 3.  Create and activate a virtual environment:
-    ```sh
+
+Option 1 (recommended):
+  ```sh
+    # Create the environment from the blueprint
+    conda env create -f environment.yml
+
+    # Activate the environment
+    conda activate discovery_env
+  ```
+Option 2:
+  ```sh
     # On macOS/Linux
     python3 -m venv venv-stable
     source venv-stable/bin/activate
@@ -61,11 +85,11 @@ Python 3.8+ and pip must be installed, along with other program requirements (se
     # On Windows
     python -m venv venv-stable
     .\venv-stable\Scripts\activate
-    ```
-4.  Install all the required packages:
-    ```sh
+  
+   # Install all the required packages:
+
     pip install -r requirements.txt
-    ```
+  ```
 After processing 100 abstracts, it will output the top 10 results.
 
 ### Run the app
