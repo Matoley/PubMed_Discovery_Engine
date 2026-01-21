@@ -22,13 +22,13 @@ import Levenshtein
 
 from Levenshtein import distance
 
-device = device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
 BERT_model = 'dmis-lab/biobert-base-cased-v1.1'
 
 biobert_tokenizer = AutoTokenizer.from_pretrained(BERT_model)
 
-biobert_model = biobert_model = AutoModel.from_pretrained(BERT_model)
+biobert_model = AutoModel.from_pretrained(BERT_model)
 
 model = BioGptForCausalLM.from_pretrained("microsoft/biogpt")
 
