@@ -1,23 +1,23 @@
 # PubMed_Discovery_Engine
-Open-source AI tool using BioBert and BioGPT to generate novel research hypothesis
+Open-source AI tool using BioBERT and BioGPT to generate novel research hypotheses
 
 The goal of the project is to assist in biomedical research:
-  Biomedical research often requires perusing vast amounts of medical publication. The sheer volume of publications means that advancement in innovation is hindered by finding connections and typically, advanced text-mining tools are inaccessible to many or require formidable amounts    of experience with coding.
+Biomedical research often requires perusing vast amounts of medical publications. The sheer volume of publications means finding connections is challenging, slowing discovery. Advanced text-mining tools may be inaccessible or require formidable amounts of experience with coding.
 
 ****
 
 Our Solution: ****An AI Python Pipeline****
-The project is planned to work in 4 steps
+The project works in 4 steps
 1. Fetches data from PubMed Abstracts from a user's input
 
 2. ****Extracting key words****:
-   Utilizing a special biomedical NLP (scispaCy), key entities are found in the abstracts and compliled into a list (gene names, chemials, effects, etc)
+   Utilizing a special biomedical NLP library (scispaCy), key entities are found in the abstracts and compiled into a list (gene names, chemicals, effects, etc)
 
 3. ****Finding hidden correlations****:
-   The program uses BioBERT to find semantic relationships between key words from abstracts. This step is crucial to find potential latent relationships based on context that led to novel discovery.
+   The program uses BioBERT to find semantic relationships between key words from abstracts. This step is crucial to find potential latent relationships based on context that could lead to novel discovery.
 
-4. ****Generating Novel Hypothesis****
-   The program feeds the most promising correlations based off BioBERT vectors (embeddings) to a specially biomedical tuned LLM (BioGPT). The model is prompted to provided plausible hypothesis that relate to the given entities.
+4. ****Generating Novel Hypotheses****
+   The program feeds the most promising correlations based on BioBERT vectors (embeddings) to an LLM tuned for biomedical text (BioGPT). The model is prompted to provide plausible hypotheses that relate to the given entities.
 
 This project utilizes the following open-source frameworks and models:
 
@@ -40,7 +40,7 @@ Follow these steps to run a local copy of the program
 
 ### Prerequisites
 
-Python 3.8+ and pip must be installed, along with other program requirements (see requirements.txt)
+Python 3.11 and pip must be installed, along with other program requirements (see requirements.txt)
 
 This program is optimized for Python 3.11. Using more recent versions may lead to C-compiler errors
 
@@ -52,7 +52,7 @@ export PUBMED_EMAIL="email@example.com"
 ```
 **On Windows**
 ```bash
-set PUBMED_EMAIL="email@example.com"
+set PUBMED_EMAIL=email@example.com
 ```
 
 ### Installation
@@ -76,30 +76,28 @@ Option 1 (recommended):
     # Activate the environment
     conda activate discovery_env
   ```
-Option 2:
+Option 2 (alternative):
   ```sh
     # On macOS/Linux
-    python3 -m venv venv-stable
+    python3.11 -m venv venv-stable
     source venv-stable/bin/activate
     
     # On Windows
-    python -m venv venv-stable
+    py -3.11 -m venv venv-stable
     .\venv-stable\Scripts\activate
   
    # Install all the required packages:
 
     pip install -r requirements.txt
   ```
-After processing 100 abstracts, it will output the top 10 results.
-
 ### Run the app
 
 Simply run the main Python script:
 ```bash
 python aiapp.py
 ```
-It will ask you for a topic. Give an example, preferably something specific (Ubiquitination, Circadian Clock, etc.) and press Enter.
+It will ask you for a topic. Enter a topic, preferably something specific (Ubiquitination, Circadian Clock, etc.) and press Enter.
 ```
 What field do you want to discover novel research opportunities in?
 ```
-
+After processing 100 abstracts, it will output the top 10 results.
