@@ -5,6 +5,7 @@ channels:
 dependencies:
   - python=3.11
   - pip
+  - setuptools<80
   - numpy=1.26.4
   - pandas
   - scikit-learn=1.7.2
@@ -15,4 +16,8 @@ dependencies:
       - transformers==4.57.1
       - python-Levenshtein==0.27.3
       - scispacy==0.5.1
+      - sacremoses==0.2.0
+      - preshed==3.0.9
+      - cymem==2.0.8
+      - murmurhash==1.0.10
       - https://s3-us-west-2.amazonaws.com/ai2-s2-scispacy/releases/v0.5.1/en_ner_bionlp13cg_md-0.5.1.tar.gz
